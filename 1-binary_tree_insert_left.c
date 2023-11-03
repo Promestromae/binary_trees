@@ -10,8 +10,8 @@
  *				take its place, and the old left-child must be set as
  *				the left-child of the new node.
  *
- * Return: a pointer to the created node, or NULL on failure
- *
+ * Return: a pointer to the created node, or NULL on failure or if
+ *			parent is NULL
  */
 
 binary_tree_t *binary_tree_insert_left(binary_tree_t *parent, int value)
@@ -29,9 +29,8 @@ binary_tree_t *binary_tree_insert_left(binary_tree_t *parent, int value)
 	new->parent = parent;
 	new->right = NULL;
 	new->left = parent->left;
-	/* Update the original left child's parent pointer */
-	if (parent->left)
-		parent->left->parent = new;
-	/* Set the new node as the left child of the parent */
 	parent->left = new;
+	if (new->left)
+		new->left->parent = new;
 	return (new);
+}
